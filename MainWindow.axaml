@@ -2,96 +2,220 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:helpers="clr-namespace:WeatherApp.Helpers"
         x:Class="WeatherApp.MainWindow"
-        Title="Application Météo">
+        Title="Météo App"
+        Width="800" Height="600"
+        Background="#1a1a1a">
+
+    <Window.Styles>
+        <Style Selector="TabControl">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+        
+        <Style Selector="TabItem">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#2d2d2d"/>
+            <Setter Property="Foreground" Value="#ffffff"/>
+            <Setter Property="Margin" Value="0 0 4 0"/>
+            <Setter Property="Padding" Value="20 0"/>
+        </Style>
+
+        <Style Selector="Button">
+            <Setter Property="Background" Value="#2196F3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="15 10"/>
+            <Setter Property="CornerRadius" Value="4"/>
+        </Style>
+
+        <Style Selector="TextBox">
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#404040"/>
+            <Setter Property="Background" Value="#2d2d2d"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="8 6"/>
+        </Style>
+
+        <Style Selector="ComboBox">
+            <Setter Property="Height" Value="35"/>
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#404040"/>
+            <Setter Property="Background" Value="#2d2d2d"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <Style Selector="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+    </Window.Styles>
+
     <TabControl>
-        <TabItem Header="Recherche">
-            <StackPanel Margin="10">
-                <Grid ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto" Margin="0,0,0,10">
-                    <TextBox Name="SearchBox" Grid.Column="0" 
-                            Watermark="Entrez le nom d'une ville..." 
-                            Margin="0,0,10,0"/>
-                    <ComboBox Name="SearchHistory" Grid.Column="1"
-                             Width="150"
-                             Margin="0,0,10,0"
-                             PlaceholderText="Historique"
-                             SelectionChanged="OnHistorySelectionChanged"/>
-                    <Button Name="SearchButton" Grid.Column="2" 
-                            Content="Rechercher" 
-                            Click="OnSearchClick"/>
-                </Grid>
-                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Ville : " Margin="0,0,10,5"/>
-                    <TextBlock Grid.Row="0" Grid.Column="1" Name="CityName"/>
-                    
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Coordonnées : " Margin="0,0,10,5"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Name="Coordinates"/>
-                    
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Température : " Margin="0,0,10,5"/>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Name="Temperature"/>
-                    
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Description : " Margin="0,0,10,5"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Name="WeatherDescription"/>
-                    
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Humidité : " Margin="0,0,10,5"/>
-                    <TextBlock Grid.Row="4" Grid.Column="1" Name="Humidity"/>
-                </Grid>
-            </StackPanel>
-        </TabItem>
-        
-        <TabItem Header="Prévisions">
-            <ListBox Name="ForecastList" Margin="10">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,5">
-                            <Grid ColumnDefinitions="150,80,150,80,Auto" Margin="0,5">
-                                <TextBlock Grid.Column="0" 
-                                         Text="{Binding Date, StringFormat='{}{0:dd/MM/yyyy à HH:mm}'}" 
-                                         VerticalAlignment="Center"/>
-                                <TextBlock Grid.Column="1" 
-                                         Text="{Binding Temperature, StringFormat='{}{0:F1}°'}"
-                                         VerticalAlignment="Center"/>
-                                <TextBlock Grid.Column="2" 
-                                         Text="{Binding Description}"
-                                         VerticalAlignment="Center"/>
-                                <TextBlock Grid.Column="3" 
-                                         Text="{Binding Humidity, StringFormat='Humidité: {0}%'}"
-                                         VerticalAlignment="Center"/>
-                                <Image Grid.Column="4" 
-                                       Height="40" 
-                                       Width="40"
-                                       Source="{Binding IconUrl, Converter={x:Static helpers:UrlToImageConverter.Instance}}"/>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </TabItem>
-        
-        <TabItem Header="Paramètres">
-            <StackPanel Margin="10" Spacing="10">
-                <TextBlock Text="Ville par défaut" FontWeight="Bold"/>
-                <TextBox Name="DefaultCityBox" Watermark="Entrez une ville par défaut" Margin="0,0,0,10"/>
-                
-                <TextBlock Text="Unité de température" FontWeight="Bold"/>
-                <ComboBox Name="TemperatureUnit" HorizontalAlignment="Stretch" Margin="0,0,0,10"
-                         SelectionChanged="OnTemperatureUnitChanged">
-                    <ComboBoxItem>Celsius (°C)</ComboBoxItem>
-                    <ComboBoxItem>Fahrenheit (°F)</ComboBoxItem>
-                </ComboBox>
+        <TabItem Header="Recherche" Name="SearchTab">
+            <Border Background="#2d2d2d" 
+                    CornerRadius="8" 
+                    Padding="20" 
+                    Margin="0 10"
+                    BoxShadow="0 2 10 0 #40000000">
+                <Grid RowDefinitions="Auto,Auto,*">
+                    <!-- Zone de recherche -->
+                    <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="0 0 0 20">
+                        <TextBox Name="SearchBox" 
+                                Grid.Column="1"
+                                Width="300"
+                                Watermark="Entrez une ville"
+                                Margin="0 0 10 0"/>
+                        
+                        <ComboBox Name="SearchHistory" 
+                                Grid.Column="0"
+                                Width="200"
+                                Margin="0 0 10 0"
+                                PlaceholderText="Historique"
+                                Opacity="0.7"/>
+                        
+                        <Button Grid.Column="2"
+                                Content="Rechercher"
+                                Click="OnSearchClick"/>
+                    </Grid>
 
-                <TextBlock Text="Historique" FontWeight="Bold"/>
-                <Button Name="ClearHistoryButton" 
-                        Content="Effacer l'historique des recherches" 
-                        Click="OnClearHistory"
-                        Margin="0,0,0,10"/>
+                    <!-- Informations météo actuelles -->
+                    <Border Grid.Row="1" 
+                            Background="#232323"
+                            CornerRadius="8"
+                            Padding="20"
+                            Margin="0 0 0 20">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <StackPanel Grid.Column="0" Spacing="15">
+                                <TextBlock Name="CityName" 
+                                         FontSize="24" 
+                                         FontWeight="Bold"/>
+                                
+                                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto">
+                                    <TextBlock Grid.Row="0" Grid.Column="0" 
+                                             Text="Coordonnées : " 
+                                             FontWeight="SemiBold"/>
+                                    <TextBlock Grid.Row="0" Grid.Column="1" 
+                                             Name="Coordinates"/>
 
-                <Button Name="SaveButton" 
-                        Content="Sauvegarder" 
-                        Click="OnSaveSettings"
-                        Background="#2196F3"
-                        Foreground="White"
-                        HorizontalAlignment="Right"/>
-            </StackPanel>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" 
+                                             Text="Température : " 
+                                             FontWeight="SemiBold"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" 
+                                             Name="Temperature"/>
+
+                                    <TextBlock Grid.Row="2" Grid.Column="0" 
+                                             Text="Description : " 
+                                             FontWeight="SemiBold"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" 
+                                             Name="WeatherDescription"/>
+
+                                    <TextBlock Grid.Row="3" Grid.Column="0" 
+                                             Text="Humidité : " 
+                                             FontWeight="SemiBold"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="1" 
+                                             Name="Humidity"/>
+                                </Grid>
+                            </StackPanel>
+                            
+                            <Image Grid.Column="1" 
+                                   Name="CurrentWeatherIcon"
+                                   Height="100" 
+                                   Width="100"
+                                   Margin="20 0 0 0"
+                                   VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Section des prévisions -->
+                    <Border Grid.Row="2" 
+                           Background="#232323"
+                           CornerRadius="8"
+                           Padding="12"
+                           Margin="0 10">
+                        <StackPanel>
+                            <TextBlock Text="Prévisions météorologiques"
+                                     FontSize="16"
+                                     FontWeight="Bold"
+                                     Margin="0 0 0 8"/>
+                            
+                            <ListBox Name="ForecastList"
+                                    Background="Transparent"
+                                    Margin="0"
+                                    Padding="0">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Background="#2d2d2d"
+                                                CornerRadius="4"
+                                                Padding="10"
+                                                Margin="0 2"
+                                                BoxShadow="0 1 3 0 #40000000">
+                                            <Grid ColumnDefinitions="Auto,*,Auto">
+                                                <StackPanel Grid.Column="0" Spacing="2" Margin="0 0 8 0">
+                                                    <TextBlock Text="{Binding Date}" 
+                                                             FontWeight="SemiBold"
+                                                             FontSize="12"/>
+                                                    <TextBlock Text="{Binding Description}" 
+                                                             FontSize="11"
+                                                             Opacity="0.9"/>
+                                                </StackPanel>
+                                                
+                                                <Image Grid.Column="2" 
+                                                       Height="24" 
+                                                       Width="24"
+                                                       Source="{Binding IconUrl, Converter={x:Static helpers:UrlToImageConverter.Instance}}"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+        </TabItem>
+
+        <TabItem Header="Paramètres" Name="SettingsTab">
+            <Border Background="#2d2d2d" 
+                    CornerRadius="8" 
+                    Padding="20" 
+                    Margin="0 10"
+                    BoxShadow="0 2 10 0 #40000000">
+                <StackPanel Spacing="20">
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="Ville par défaut" 
+                                 FontWeight="Bold"/>
+                        <TextBox Name="DefaultCityBox" 
+                                Watermark="Entrez une ville par défaut"/>
+                    </StackPanel>
+
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="Unité de température" 
+                                 FontWeight="Bold"/>
+                        <ComboBox Name="TemperatureUnit" 
+                                 SelectionChanged="OnTemperatureUnitChanged"
+                                 HorizontalAlignment="Stretch">
+                            <ComboBoxItem>Celsius (°C)</ComboBoxItem>
+                            <ComboBoxItem>Fahrenheit (°F)</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="Historique" 
+                                 FontWeight="Bold"/>
+                        <Button Name="ClearHistoryButton"
+                                Content="Effacer l'historique des recherches"
+                                Click="OnClearHistory"/>
+                    </StackPanel>
+
+                    <Button Name="SaveButton"
+                            Content="Sauvegarder"
+                            Click="OnSaveSettings"
+                            HorizontalAlignment="Right"/>
+                </StackPanel>
+            </Border>
         </TabItem>
     </TabControl>
 </Window> 

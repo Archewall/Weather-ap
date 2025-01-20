@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using WeatherApp.Models;
 using System.IO;
+using Avalonia.Media.Imaging;
 
 namespace WeatherApp.Services
 {
@@ -119,6 +120,26 @@ namespace WeatherApp.Services
             }
             
             return new List<Weather>();
+        }
+
+        public async Task<Bitmap> GetWeatherIcon(string iconUrl)
+        {
+            try
+            {
+                using (var httpClient = new HttpClient())
+                {
+                    var response = await httpClient.GetByteArrayAsync(iconUrl);
+                    using (var stream = new MemoryStream(response))
+                    {
+                        return new Bitmap(stream);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllText("app_detailed.log", $"Erreur lors du chargement de l'icône : {ex.Message}\n");
+                return null;
+            }
         }
     }
 } 

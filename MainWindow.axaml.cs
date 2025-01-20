@@ -180,6 +180,20 @@ namespace WeatherApp
                 WeatherDescription.Text = weather.Description;
                 Humidity.Text = $"{weather.Humidity}%";
                 
+                // Mettre à jour l'icône météo
+                if (!string.IsNullOrEmpty(weather.IconUrl))
+                {
+                    try
+                    {
+                        var bitmap = await _weatherService.GetWeatherIcon(weather.IconUrl);
+                        CurrentWeatherIcon.Source = bitmap;
+                    }
+                    catch (Exception ex)
+                    {
+                        File.AppendAllText("app_detailed.log", $"Erreur lors du chargement de l'icône : {ex.Message}\n");
+                    }
+                }
+                
                 AddToHistory(weather.CityName);
                 await LoadForecast(SearchBox.Text);
             }
@@ -197,6 +211,21 @@ namespace WeatherApp
                     Temperature.Text = FormatTemperature(weather.Temperature);
                     WeatherDescription.Text = weather.Description;
                     Humidity.Text = $"{weather.Humidity}%";
+                    
+                    // Mettre à jour l'icône météo
+                    if (!string.IsNullOrEmpty(weather.IconUrl))
+                    {
+                        try
+                        {
+                            var bitmap = await _weatherService.GetWeatherIcon(weather.IconUrl);
+                            CurrentWeatherIcon.Source = bitmap;
+                        }
+                        catch (Exception ex)
+                        {
+                            File.AppendAllText("app_detailed.log", $"Erreur lors du chargement de l'icône : {ex.Message}\n");
+                        }
+                    }
+                    
                     await LoadForecast(SearchBox.Text);
                 }
             }
