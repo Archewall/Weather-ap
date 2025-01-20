@@ -6,9 +6,20 @@
     <TabControl>
         <TabItem Header="Recherche">
             <StackPanel Margin="10">
-                <TextBox Name="SearchBox" Watermark="Entrez le nom d'une ville..." Margin="0,0,0,10"/>
-                <Button Content="Rechercher" Click="OnSearchClick" Margin="0,0,0,10"/>
-                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+                <Grid ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto" Margin="0,0,0,10">
+                    <TextBox Name="SearchBox" Grid.Column="0" 
+                            Watermark="Entrez le nom d'une ville..." 
+                            Margin="0,0,10,0"/>
+                    <ComboBox Name="SearchHistory" Grid.Column="1"
+                             Width="150"
+                             Margin="0,0,10,0"
+                             PlaceholderText="Historique"
+                             SelectionChanged="OnHistorySelectionChanged"/>
+                    <Button Name="SearchButton" Grid.Column="2" 
+                            Content="Rechercher" 
+                            Click="OnSearchClick"/>
+                </Grid>
+                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Ville : " Margin="0,0,10,5"/>
                     <TextBlock Grid.Row="0" Grid.Column="1" Name="CityName"/>
                     
@@ -23,8 +34,6 @@
                     
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Humidité : " Margin="0,0,10,5"/>
                     <TextBlock Grid.Row="4" Grid.Column="1" Name="Humidity"/>
-                    
-                    <Image Grid.Row="5" Grid.ColumnSpan="2" Name="WeatherIcon" Height="100" Width="100"/>
                 </Grid>
             </StackPanel>
         </TabItem>
@@ -39,7 +48,7 @@
                                          Text="{Binding Date, StringFormat='{}{0:dd/MM/yyyy à HH:mm}'}" 
                                          VerticalAlignment="Center"/>
                                 <TextBlock Grid.Column="1" 
-                                         Text="{Binding Temperature, StringFormat='{}{0:F1}°C'}"
+                                         Text="{Binding Temperature, StringFormat='{}{0:F1}°'}"
                                          VerticalAlignment="Center"/>
                                 <TextBlock Grid.Column="2" 
                                          Text="{Binding Description}"
@@ -59,13 +68,29 @@
         </TabItem>
         
         <TabItem Header="Paramètres">
-            <StackPanel Margin="10">
-                <TextBox Name="DefaultCity" Watermark="Ville par défaut" Margin="0,0,0,10"/>
-                <ComboBox Name="LanguageSelector" Margin="0,0,0,10">
-                    <ComboBoxItem>Français</ComboBoxItem>
-                    <ComboBoxItem>English</ComboBoxItem>
+            <StackPanel Margin="10" Spacing="10">
+                <TextBlock Text="Ville par défaut" FontWeight="Bold"/>
+                <TextBox Name="DefaultCityBox" Watermark="Entrez une ville par défaut" Margin="0,0,0,10"/>
+                
+                <TextBlock Text="Unité de température" FontWeight="Bold"/>
+                <ComboBox Name="TemperatureUnit" HorizontalAlignment="Stretch" Margin="0,0,0,10"
+                         SelectionChanged="OnTemperatureUnitChanged">
+                    <ComboBoxItem>Celsius (°C)</ComboBoxItem>
+                    <ComboBoxItem>Fahrenheit (°F)</ComboBoxItem>
                 </ComboBox>
-                <Button Content="Sauvegarder" Click="OnSaveSettings"/>
+
+                <TextBlock Text="Historique" FontWeight="Bold"/>
+                <Button Name="ClearHistoryButton" 
+                        Content="Effacer l'historique des recherches" 
+                        Click="OnClearHistory"
+                        Margin="0,0,0,10"/>
+
+                <Button Name="SaveButton" 
+                        Content="Sauvegarder" 
+                        Click="OnSaveSettings"
+                        Background="#2196F3"
+                        Foreground="White"
+                        HorizontalAlignment="Right"/>
             </StackPanel>
         </TabItem>
     </TabControl>

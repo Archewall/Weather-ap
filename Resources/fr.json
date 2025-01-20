@@ -1,0 +1,25 @@
+{
+    "app_title": "Application Météo",
+    "search": {
+        "title": "Recherche",
+        "placeholder": "Entrez le nom d'une ville...",
+        "button": "Rechercher",
+        "city": "Ville",
+        "coordinates": "Coordonnées",
+        "temperature": "Température",
+        "description": "Description",
+        "humidity": "Humidité"
+    },
+    "forecast": {
+        "title": "Prévisions",
+        "date_format": "dd/MM/yyyy à HH:mm"
+    },
+    "settings": {
+        "title": "Paramètres",
+        "default_city": "Ville par défaut",
+        "language": "Langue",
+        "save": "Sauvegarder",
+        "french": "Français",
+        "english": "Anglais"
+    }
+} 

@@ -1,53 +1,43 @@
 using System;
 using System.IO;
-using System.Text.Json;
+using Newtonsoft.Json;
 using WeatherApp.Models;
 
 namespace WeatherApp.Services
 {
     public class SettingsService
     {
-        private readonly string _settingsPath;
-
-        public SettingsService()
-        {
-            var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            var appFolder = Path.Combine(appDataPath, "WeatherApp");
-            _settingsPath = Path.Combine(appFolder, "settings.json");
-        }
+        private const string SettingsFile = "settings.json";
 
         public Settings LoadSettings()
         {
-            if (File.Exists(_settingsPath))
+            try
             {
-                var json = File.ReadAllText(_settingsPath);
-                var settings = JsonSerializer.Deserialize<Settings>(json);
-                return settings ?? CreateDefaultSettings();
+                if (File.Exists(SettingsFile))
+                {
+                    var json = File.ReadAllText(SettingsFile);
+                    return JsonConvert.DeserializeObject<Settings>(json) ?? new Settings();
+                }
+            }
+            catch (Exception ex)
+            {
+                File.AppendAllText("app_detailed.log", $"Erreur lors du chargement des paramètres : {ex.Message}\n");
             }
 
-            return CreateDefaultSettings();
-        }
-
-        private Settings CreateDefaultSettings()
-        {
-            return new Settings
-            {
-                DefaultCity = "Paris",
-                Language = "fr",
-                Units = "metric"
-            };
+            return new Settings();
         }
 
         public void SaveSettings(Settings settings)
         {
-            var directory = Path.GetDirectoryName(_settingsPath);
-            if (directory != null && !Directory.Exists(directory))
+            try
             {
-                Directory.CreateDirectory(directory);
+                var json = JsonConvert.SerializeObject(settings);
+                File.WriteAllText(SettingsFile, json);
             }
-
-            var json = JsonSerializer.Serialize(settings);
-            File.WriteAllText(_settingsPath, json);
+            catch (Exception ex)
+            {
+                File.AppendAllText("app_detailed.log", $"Erreur lors de la sauvegarde des paramètres : {ex.Message}\n");
+            }
         }
     }
 } 
