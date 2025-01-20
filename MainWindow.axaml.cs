@@ -174,6 +174,7 @@ namespace WeatherApp
             
             if (weather != null)
             {
+                ErrorMessage.IsVisible = false;
                 CityName.Text = weather.CityName;
                 Coordinates.Text = $"{weather.Latitude}, {weather.Longitude}";
                 Temperature.Text = FormatTemperature(weather.Temperature);
@@ -196,6 +197,17 @@ namespace WeatherApp
                 
                 AddToHistory(weather.CityName);
                 await LoadForecast(SearchBox.Text);
+            }
+            else
+            {
+                ErrorMessage.IsVisible = true;
+                CityName.Text = "";
+                Coordinates.Text = "";
+                Temperature.Text = "";
+                WeatherDescription.Text = "";
+                Humidity.Text = "";
+                CurrentWeatherIcon.Source = null;
+                ForecastList.ItemsSource = null;
             }
         }
 

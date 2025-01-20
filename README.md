@@ -12,7 +12,7 @@ Une application de bureau simple pour consulter la météo actuelle et les prév
 
 ## Prérequis
 
-- .NET 6.0 ou supérieur
+- .NET 8.0 ou supérieur
 - Windows 10 ou supérieur
 
 ## Installation

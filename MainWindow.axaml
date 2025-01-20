@@ -60,7 +60,7 @@
                     Padding="20" 
                     Margin="0 10"
                     BoxShadow="0 2 10 0 #40000000">
-                <Grid RowDefinitions="Auto,Auto,*">
+                <Grid RowDefinitions="Auto,Auto,Auto,*">
                     <!-- Zone de recherche -->
                     <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Margin="0 0 0 20">
                         <TextBox Name="SearchBox" 
@@ -81,56 +81,79 @@
                                 Click="OnSearchClick"/>
                     </Grid>
 
+                    <!-- Message d'erreur -->
+                    <TextBlock Name="ErrorMessage"
+                             Grid.Row="1"
+                             Foreground="#ff4444"
+                             FontWeight="Bold"
+                             IsVisible="False"
+                             Text="La ville n'existe pas !"
+                             HorizontalAlignment="Center"
+                             Margin="0 -10 0 10"/>
+
                     <!-- Informations météo actuelles -->
-                    <Border Grid.Row="1" 
+                    <Border Grid.Row="2" 
                             Background="#232323"
                             CornerRadius="8"
                             Padding="20"
-                            Margin="0 0 0 20">
+                            Margin="0 0 0 20"
+                            BoxShadow="0 2 8 0 #40000000">
                         <Grid ColumnDefinitions="*,Auto">
                             <StackPanel Grid.Column="0" Spacing="15">
                                 <TextBlock Name="CityName" 
-                                         FontSize="24" 
+                                         FontSize="28" 
                                          FontWeight="Bold"/>
                                 
-                                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto">
+                                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto" Margin="0 10">
                                     <TextBlock Grid.Row="0" Grid.Column="0" 
                                              Text="Coordonnées : " 
-                                             FontWeight="SemiBold"/>
+                                             FontWeight="SemiBold"
+                                             FontSize="16"
+                                             Margin="0 0 10 0"/>
                                     <TextBlock Grid.Row="0" Grid.Column="1" 
-                                             Name="Coordinates"/>
+                                             Name="Coordinates"
+                                             FontSize="16"/>
 
                                     <TextBlock Grid.Row="1" Grid.Column="0" 
                                              Text="Température : " 
-                                             FontWeight="SemiBold"/>
+                                             FontWeight="SemiBold"
+                                             FontSize="16"
+                                             Margin="0 0 10 0"/>
                                     <TextBlock Grid.Row="1" Grid.Column="1" 
-                                             Name="Temperature"/>
+                                             Name="Temperature"
+                                             FontSize="16"/>
 
                                     <TextBlock Grid.Row="2" Grid.Column="0" 
                                              Text="Description : " 
-                                             FontWeight="SemiBold"/>
+                                             FontWeight="SemiBold"
+                                             FontSize="16"
+                                             Margin="0 0 10 0"/>
                                     <TextBlock Grid.Row="2" Grid.Column="1" 
-                                             Name="WeatherDescription"/>
+                                             Name="WeatherDescription"
+                                             FontSize="16"/>
 
                                     <TextBlock Grid.Row="3" Grid.Column="0" 
                                              Text="Humidité : " 
-                                             FontWeight="SemiBold"/>
+                                             FontWeight="SemiBold"
+                                             FontSize="16"
+                                             Margin="0 0 10 0"/>
                                     <TextBlock Grid.Row="3" Grid.Column="1" 
-                                             Name="Humidity"/>
+                                             Name="Humidity"
+                                             FontSize="16"/>
                                 </Grid>
                             </StackPanel>
                             
                             <Image Grid.Column="1" 
                                    Name="CurrentWeatherIcon"
-                                   Height="100" 
-                                   Width="100"
+                                   Height="120" 
+                                   Width="120"
                                    Margin="20 0 0 0"
                                    VerticalAlignment="Center"/>
                         </Grid>
                     </Border>
 
                     <!-- Section des prévisions -->
-                    <Border Grid.Row="2" 
+                    <Border Grid.Row="3" 
                            Background="#232323"
                            CornerRadius="8"
                            Padding="12"
