@@ -1,0 +1,72 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:helpers="clr-namespace:WeatherApp.Helpers"
+        x:Class="WeatherApp.MainWindow"
+        Title="Application Météo">
+    <TabControl>
+        <TabItem Header="Recherche">
+            <StackPanel Margin="10">
+                <TextBox Name="SearchBox" Watermark="Entrez le nom d'une ville..." Margin="0,0,0,10"/>
+                <Button Content="Rechercher" Click="OnSearchClick" Margin="0,0,0,10"/>
+                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Ville : " Margin="0,0,10,5"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Name="CityName"/>
+                    
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Coordonnées : " Margin="0,0,10,5"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Name="Coordinates"/>
+                    
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Température : " Margin="0,0,10,5"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Name="Temperature"/>
+                    
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Description : " Margin="0,0,10,5"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" Name="WeatherDescription"/>
+                    
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Humidité : " Margin="0,0,10,5"/>
+                    <TextBlock Grid.Row="4" Grid.Column="1" Name="Humidity"/>
+                    
+                    <Image Grid.Row="5" Grid.ColumnSpan="2" Name="WeatherIcon" Height="100" Width="100"/>
+                </Grid>
+            </StackPanel>
+        </TabItem>
+        
+        <TabItem Header="Prévisions">
+            <ListBox Name="ForecastList" Margin="10">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="4" Padding="10" Margin="0,5">
+                            <Grid ColumnDefinitions="150,80,150,80,Auto" Margin="0,5">
+                                <TextBlock Grid.Column="0" 
+                                         Text="{Binding Date, StringFormat='{}{0:dd/MM/yyyy à HH:mm}'}" 
+                                         VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="1" 
+                                         Text="{Binding Temperature, StringFormat='{}{0:F1}°C'}"
+                                         VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="2" 
+                                         Text="{Binding Description}"
+                                         VerticalAlignment="Center"/>
+                                <TextBlock Grid.Column="3" 
+                                         Text="{Binding Humidity, StringFormat='Humidité: {0}%'}"
+                                         VerticalAlignment="Center"/>
+                                <Image Grid.Column="4" 
+                                       Height="40" 
+                                       Width="40"
+                                       Source="{Binding IconUrl, Converter={x:Static helpers:UrlToImageConverter.Instance}}"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </TabItem>
+        
+        <TabItem Header="Paramètres">
+            <StackPanel Margin="10">
+                <TextBox Name="DefaultCity" Watermark="Ville par défaut" Margin="0,0,0,10"/>
+                <ComboBox Name="LanguageSelector" Margin="0,0,0,10">
+                    <ComboBoxItem>Français</ComboBoxItem>
+                    <ComboBoxItem>English</ComboBoxItem>
+                </ComboBox>
+                <Button Content="Sauvegarder" Click="OnSaveSettings"/>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
+</Window> 
